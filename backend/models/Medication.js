@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const medicationSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     familyMemberId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FamilyMember',
-        required: true
+        required: false // Can be null if medication is for the user themselves
     },
     name: {
         type: String,
@@ -14,17 +19,14 @@ const medicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    frequency: {
-        type: String,
+    schedule: {
+        type: String, // More flexible for various schedules, e.g., "daily", "weekly", specific times
         required: true
     },
-    startDate: {
-        type: Date,
-        required: true
-    },
-    endDate: {
-        type: Date,
-        required: false
+    stockCount: {
+        type: Number,
+        required: false,
+        default: 0
     },
     notes: {
         type: String,
